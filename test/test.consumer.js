@@ -13,10 +13,6 @@ var TOPIC_POSTFIX = '_test_' + Date.now();
 var EXISTS_TOPIC_1 = '_exists_1' + TOPIC_POSTFIX;
 var EXISTS_TOPIC_2 = '_exists_2' + TOPIC_POSTFIX;
 var EXISTS_GZIP = '_exists_gzip'; // + TOPIC_POSTFIX;
-var EXISTS_SNAPPY = '_exists_snappy'; // + TOPIC_POSTFIX;
-
-// Compression-friendly to be interesting
-var SNAPPY_MESSAGE = new Array(20).join('snappy');
 
 var host = process.env['KAFKA_TEST_HOST'] || '';
 function noop() { console.log(arguments) }
@@ -41,16 +37,14 @@ before(function (done) {
         producer.createTopics([
             EXISTS_TOPIC_1,
             EXISTS_TOPIC_2,
-            EXISTS_GZIP,
-            EXISTS_SNAPPY
+            EXISTS_GZIP
         ], false, function (err, created) {
             if (err) return done(err);
 
             function useNewTopics() {
                 producer.send([
                     { topic: EXISTS_TOPIC_2, messages: 'hello kafka' },
-                    { topic: EXISTS_GZIP, messages: 'hello gzip', attributes: 1 },
-                    { topic: EXISTS_SNAPPY, messages: SNAPPY_MESSAGE, attributes: 2 }
+                    { topic: EXISTS_GZIP, messages: 'hello gzip', attributes: 1 }
                 ], done);
             }
             // Ensure leader selection happened
@@ -94,24 +88,6 @@ describe('Consumer', function () {
                 message.topic.should.equal(EXISTS_GZIP);
                 message.value.should.equal('hello gzip');
                 offset.commit('_groupId_gzip_test', [message], function (err) {
-                    if (count++ === 0) done(err);
-                });
-            });
-        });
-
-        it('should decode snappy messages', function (done) {
-            var topics = [ { topic: EXISTS_SNAPPY } ],
-                options = { autoCommit: false, groupId: '_groupId_snappy_test' };
-            var consumer = new Consumer(createClient(), topics, options);
-            var count = 0;
-            consumer.on('error', noop);
-            consumer.on('offsetOutOfRange', function (topic) {
-                offsetOutOfRange.call(null, topic, this);
-            });
-            consumer.once('message', function (message) {
-                message.topic.should.equal(EXISTS_SNAPPY);
-                message.value.should.equal(SNAPPY_MESSAGE);
-                offset.commit('_groupId_snappy_test', [message], function (err) {
                     if (count++ === 0) done(err);
                 });
             });

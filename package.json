@@ -1,5 +1,5 @@
 {
-  "name": "kafka-node",
+  "name": "kafka-node--light",
   "description": "node client for Apache kafka, only support kafka 0.8 and above",
   "version": "0.2.29",
   "main": "kafka.js",
@@ -12,8 +12,7 @@
     "lodash": ">3.0 <4.0",
     "node-uuid": "~1.4.3",
     "node-zookeeper-client": "~0.2.2",
-    "retry": "~0.6.1",
-    "snappy": "^4.0.1"
+    "retry": "~0.6.1"
   },
   "devDependencies": {
     "mocha": "^2.2.1",
@@ -22,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:SOHU-Co/kafka-node.git"
+    "url": "git@github.com:kaustavha/kafka-node--light.git"
   },
   "scripts": {
     "test": "make test"

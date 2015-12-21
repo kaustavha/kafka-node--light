@@ -92,19 +92,6 @@ describe('Producer', function () {
             });
         });
 
-        it('should support snappy compression', function (done) {
-            producer.send([{
-                topic: EXISTS_TOPIC_3,
-                messages: ['hello kafka', 'hello kafka'],
-                attributes: 2
-            }], function (err, message) {
-                if (err) return done(err);
-                message.should.be.ok;
-                message[EXISTS_TOPIC_3]['0'].should.be.above(0);
-                done();
-            });
-        });
-
         it('should support gzip compression', function (done) {
             producer.send([{
                 topic: EXISTS_TOPIC_3,
