@@ -1,5 +1,8 @@
-Kafka-node
+Kafka-node--light
 ==========
+
+This is a clone of kafka-node with the dangerously compilation error prone snappy compression library ripped out. 
+Ref: https://github.com/SOHU-Co/kafka-node/issues/273
 
 [![NPM](https://nodei.co/npm/kafka-node.png)](https://nodei.co/npm/kafka-node/)
 [![NPM](https://nodei.co/npm-dl/kafka-node.png?height=3)](https://nodei.co/npm/kafka-node/)
