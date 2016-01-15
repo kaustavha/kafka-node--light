@@ -4,6 +4,9 @@ Kafka-node--light
 This is a clone of kafka-node with the dangerously compilation error prone snappy compression library ripped out. 
 Ref: https://github.com/SOHU-Co/kafka-node/issues/273
 
+This library is good for playing around with a kafka-node client, writing code to learn but probably shouldnt be used in production. 
+Using snappy compression and kafka-node@0.2.25 (latest didnt work for us) results in 8k TPS in our staging environment whereas using this library barely breaks 3k. One should note our kafka producer is in Java and has snappy compression enabled. 
+
 [![NPM](https://nodei.co/npm/kafka-node.png)](https://nodei.co/npm/kafka-node/)
 [![NPM](https://nodei.co/npm-dl/kafka-node.png?height=3)](https://nodei.co/npm/kafka-node/)
 
